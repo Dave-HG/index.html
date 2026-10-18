@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Misión Espacial: Suma Interactiva</title>
+  <title>Misión Espacial: Suma Neón Interactiva</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -382,7 +382,7 @@
 
   <!-- Footer -->
   <footer class="text-center text-xs text-cyan-500/60 font-mono mt-6 pb-2">
-    SISTEMA DR. DAVE V3.0; 2026 - Viaje al espacio numerico.
+    SISTEMA DR DAVE DE APRENDIZAJE ESPACIAL V3.0; 2026.
   </footer>
 
   <!-- Script Principal JavaScript -->
@@ -638,22 +638,25 @@
         feedbackBox.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-2"></i> ¡EXCELENTE! ${number1} + ${number2} ES IGUAL A ${correctAnswer}. ¡INICIANDO SALTO!`;
         statusText.innerHTML = '<span class="text-emerald-400 glow-text-green">[ VUELO EN PROGRESO ]</span>';
 
-        startHopping(true);
+        startHopping(true, userVal);
       } else {
         // RESPUESTA INCORRECTA
         feedbackBox.className = 'mt-4 p-3 rounded-xl border border-pink-500/60 bg-pink-950/70 text-pink-300 font-orbitron text-sm text-center glow-pink';
-        feedbackBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-pink-400 mr-2"></i> ¡OOPS! La respuesta no es ${userVal}. ¡Cuidado con el salto!`;
+        feedbackBox.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-pink-400 mr-2"></i> ¡TRAYECTORIA A ${userVal}! ¡VEAMOS DÓNDE LLEGA EL ASTRONAUTA!`;
         statusText.innerHTML = '<span class="text-pink-400 glow-text-pink">[ ERROR DE TRAYECTORIA ]</span>';
 
-        startHopping(false);
+        startHopping(false, userVal);
       }
     });
 
     // Secuencia de Saltos (Éxito o Falla)
-    async function startHopping(isCorrect) {
-      // Si falla, el astronauta saltará hasta un punto intermedio antes de caer
-      const failStep = isCorrect ? correctAnswer : Math.max(1, Math.floor(correctAnswer / 2));
-      const targetStep = isCorrect ? correctAnswer : failStep;
+    async function startHopping(isCorrect, userVal) {
+      // Si la respuesta es correcta, salta hasta el total correcto.
+      // Si es incorrecta, salta hasta el número de la respuesta ingresada por el niño (limitado por los meteoritos existentes).
+      const maxAvailableStep = correctAnswer;
+      const targetStep = isCorrect 
+        ? correctAnswer 
+        : Math.min(Math.max(1, userVal), maxAvailableStep);
 
       for (let step = 1; step <= targetStep; step++) {
         currentMeteoriteNum.innerText = step;
@@ -704,16 +707,16 @@
         // Llegó con éxito a la nave espacial
         boardSpaceShip();
       } else {
-        // El astronauta pierde el equilibrio y cae
-        fallFromMeteorite(failStep);
+        // El astronauta llega al meteorito equivocado ingresado por el niño y cae
+        fallFromMeteorite(targetStep, userVal);
       }
     }
 
-    // Animación cuando la respuesta es incorrecta y cae al vacío
-    function fallFromMeteorite(stepIndex) {
+    // Animación cuando la respuesta es incorrecta y cae al vacío desde la cifra escrita
+    function fallFromMeteorite(landedStep, userVal) {
       playFallSound();
       
-      const currentX = meteoritePositions[stepIndex];
+      const currentX = meteoritePositions[landedStep];
       astronaut.style.setProperty('--fall-x', `${currentX}px`);
       astronaut.style.setProperty('--fall-y', '0px');
 
@@ -721,8 +724,8 @@
 
       setTimeout(() => {
         feedbackBox.innerHTML = `
-          <div class="text-pink-300 font-bold mb-1">¡EL ASTRONAUTA CAYÓ AL ESPACIO!</div>
-          <div class="text-xs text-slate-300">La respuesta correcta era <span class="text-amber-400 font-bold">${correctAnswer}</span> (${number1} + ${number2} = ${correctAnswer}). ¡Inténtalo de nuevo!</div>
+          <div class="text-pink-300 font-bold mb-1">¡LLEGASTE AL METEORITO ${landedStep} Y EL ASTRONAUTA PERDIÓ EL EQUILIBRIO!</div>
+          <div class="text-xs text-slate-300">Escribiste <span class="text-pink-400 font-bold">${userVal}</span>, pero la suma correcta es <span class="text-amber-400 font-bold">${correctAnswer}</span> (${number1} + ${number2} = ${correctAnswer}). ¡Inténtalo otra vez!</div>
         `;
         statusText.innerHTML = '<span class="text-red-400">[ ASTRONAUTA PERDIDO ]</span>';
         
