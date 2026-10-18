@@ -3,96 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Ranita Sumadora</title>
+  <title>Misión Espacial: Suma Neón</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts: Fredoka & Quicksand para un toque infantil y amigable -->
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts: Orbitron & Share Tech Mono para estilo Cyberpunk/Espacial -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff007f;
+      --neon-purple: #9d00ff;
+      --neon-gold: #ffb700;
+      --space-dark: #050714;
+    }
+
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 40%, #7dd3fc 100%);
+      font-family: 'Share Tech Mono', monospace;
+      background-color: var(--space-dark);
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(157, 0, 255, 0.15) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(0, 243, 255, 0.15) 0%, transparent 45%);
       min-height: 100vh;
+      color: #e2e8f0;
+      overflow-x: hidden;
     }
 
-    .font-fredoka {
-      font-family: 'Fredoka', cursive;
+    .font-orbitron {
+      font-family: 'Orbitron', sans-serif;
     }
 
-    /* Animación de flotación suave para las nubes/decoración */
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(1deg); }
-    }
-
-    .animate-float {
-      animation: float 4s ease-in-out infinite;
-    }
-
-    /* Animación de respiración de la rana */
-    @keyframes idle-frog {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05, 0.95); }
-    }
-
-    .idle-frog {
-      animation: idle-frog 2s ease-in-out infinite;
-    }
-
-    /* Regleta de nenúfares con scroll suave y personalizado */
-    .pond-scroll::-webkit-scrollbar {
-      height: 10px;
-    }
-    .pond-scroll::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
-    }
-    .pond-scroll::-webkit-scrollbar-thumb {
-      background: #38bdf8;
-      border-radius: 10px;
-    }
-
-    /* Efectos de ondas en el agua al saltar */
-    @keyframes ripple {
-      0% { transform: scale(0.8); opacity: 1; }
-      100% { transform: scale(2.2); opacity: 0; }
-    }
-
-    .ripple-effect {
-      position: absolute;
-      border: 3px solid rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
+    /* Fondo de estrellas animadas */
+    .stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      animation: ripple 0.6s ease-out forwards;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background-color: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    /* Sombras y bordes Neon Glow */
+    .glow-cyan {
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.2);
+      border: 1px solid var(--neon-cyan);
+    }
+
+    .glow-pink {
+      box-shadow: 0 0 15px rgba(ff, 0, 127, 0.4), inset 0 0 10px rgba(ff, 0, 127, 0.2);
+      border: 1px solid var(--neon-pink);
+    }
+
+    .glow-text-cyan {
+      text-shadow: 0 0 10px rgba(0, 243, 255, 0.8), 0 0 20px rgba(0, 243, 255, 0.4);
+    }
+
+    .glow-text-pink {
+      text-shadow: 0 0 10px rgba(255, 0, 127, 0.8), 0 0 20px rgba(255, 0, 127, 0.4);
+    }
+
+    .glow-text-gold {
+      text-shadow: 0 0 10px rgba(255, 183, 0, 0.8), 0 0 20px rgba(255, 183, 0, 0.4);
+    }
+
+    /* Animación Flotante para Meteoritos */
+    @keyframes float-rock {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(3deg); }
+    }
+
+    .float-rock {
+      animation: float-rock 4s ease-in-out infinite;
+    }
+
+    /* Scrollbar personalizada futurista */
+    .space-scroll::-webkit-scrollbar {
+      height: 8px;
+    }
+    .space-scroll::-webkit-scrollbar-track {
+      background: rgba(5, 7, 20, 0.8);
+      border-radius: 10px;
+      border: 1px solid rgba(0, 243, 255, 0.2);
+    }
+    .space-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+      border-radius: 10px;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    /* Destello de propulsión de fuego */
+    .thruster-flame {
+      opacity: 0;
+      transition: opacity 0.1s ease;
+    }
+    .thruster-active .thruster-flame {
+      opacity: 1;
+    }
+
+    /* Animación de Lanzamiento de Nave */
+    @keyframes rocket-takeoff {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 15px var(--neon-cyan)); }
+      30% { transform: translateY(10px) scale(0.98); filter: drop-shadow(0 0 35px var(--neon-pink)); }
+      100% { transform: translateY(-800px) scale(1.3); filter: drop-shadow(0 0 50px var(--neon-gold)); opacity: 0; }
+    }
+
+    .takeoff-animation {
+      animation: rocket-takeoff 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
     }
   </style>
 </head>
-<body class="flex flex-col min-h-screen text-slate-800 p-3 sm:p-6 select-none">
+<body class="flex flex-col min-h-screen relative p-3 sm:p-6 select-none">
 
-  <!-- Header / Título -->
-  <header class="text-center my-3">
-    <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-2 rounded-full shadow-lg border-2 border-emerald-300">
-      <i class="fa-solid font-bold text-3xl text-emerald-500 fa-frog"></i>
-      <h1 class="font-fredoka text-2xl sm:text-4xl text-emerald-700 tracking-wide">La Ranita Sumadora</h1>
-    </div>
-    <p class="text-xs sm:text-sm text-sky-900 font-semibold mt-1">¡Introduce dos números y aprende a sumar saltando!</p>
-  </header>
+  <!-- Fondo de Estrellas -->
+  <div class="stars-container" id="starsContainer"></div>
 
-  <!-- Panel Principal -->
-  <main class="max-w-4xl w-full mx-auto flex-1 flex flex-col gap-6">
+  <!-- Contenedor Principal -->
+  <div class="relative z-10 max-w-5xl w-full mx-auto flex-1 flex flex-col gap-6">
 
-    <!-- Tarjeta de Controles e Entradas -->
-    <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-xl border-4 border-emerald-200">
-      <form id="sumForm" class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+    <!-- Header / Título Futurista -->
+    <header class="text-center my-2">
+      <div class="inline-flex items-center gap-3 bg-slate-950/80 backdrop-blur-md px-6 py-3 rounded-2xl glow-cyan border border-cyan-500/50">
+        <i class="fa-solid fa-user-astronaut text-3xl text-cyan-400 animate-pulse"></i>
+        <h1 class="font-orbitron font-extrabold text-2xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-pink-500 tracking-wider">
+          MISIÓN SUMA ESPACIAL
+        </h1>
+      </div>
+      <p class="text-xs sm:text-sm text-cyan-300/80 font-mono mt-2 tracking-widest uppercase">
+        [ Protocolo de Navegación: Calcula el vector de salto para abordar la nave ]
+      </p>
+    </header>
+
+    <!-- Panel de Control / Entradas -->
+    <div class="bg-slate-950/80 backdrop-blur-xl rounded-3xl p-5 sm:p-7 glow-pink border border-pink-500/40">
+      <form id="sumForm" class="flex flex-col md:flex-row items-center justify-center gap-6">
         
-        <!-- Número A -->
+        <!-- Coordenada A -->
         <div class="flex flex-col items-center w-full md:w-auto">
-          <label for="num1" class="font-fredoka text-lg text-emerald-800 mb-1 flex items-center gap-2">
-            <span class="bg-emerald-100 text-emerald-700 w-6 h-6 rounded-full inline-flex items-center justify-center text-xs">1</span>
-            Primer número:
+          <label for="num1" class="font-orbitron text-xs sm:text-sm text-cyan-300 mb-2 tracking-wider flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            COORDENADA ALPHA [A]:
           </label>
           <input 
             type="number" 
@@ -101,18 +165,18 @@
             max="30"
             placeholder="0"
             required
-            class="w-28 h-14 text-center font-fredoka text-3xl text-emerald-700 bg-emerald-50 border-3 border-emerald-300 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-400/50 transition duration-200"
+            class="w-32 h-14 text-center font-orbitron text-3xl text-cyan-300 bg-slate-900/90 border-2 border-cyan-500/60 rounded-2xl focus:outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-500/30 transition duration-300 shadow-inner"
           >
         </div>
 
-        <!-- Símbolo Más -->
-        <div class="text-3xl font-fredoka text-emerald-500 font-bold hidden md:block">+</div>
+        <!-- Operador Mas -->
+        <div class="text-3xl font-orbitron text-pink-500 font-bold hidden md:block glow-text-pink">+</div>
 
-        <!-- Número B -->
+        <!-- Coordenada B -->
         <div class="flex flex-col items-center w-full md:w-auto">
-          <label for="num2" class="font-fredoka text-lg text-emerald-800 mb-1 flex items-center gap-2">
-            <span class="bg-emerald-100 text-emerald-700 w-6 h-6 rounded-full inline-flex items-center justify-center text-xs">2</span>
-            Segundo número:
+          <label for="num2" class="font-orbitron text-xs sm:text-sm text-pink-300 mb-2 tracking-wider flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
+            COORDENADA BETA [B]:
           </label>
           <input 
             type="number" 
@@ -121,125 +185,158 @@
             max="30"
             placeholder="0"
             required
-            class="w-28 h-14 text-center font-fredoka text-3xl text-emerald-700 bg-emerald-50 border-3 border-emerald-300 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-400/50 transition duration-200"
+            class="w-32 h-14 text-center font-orbitron text-3xl text-pink-300 bg-slate-900/90 border-2 border-pink-500/60 rounded-2xl focus:outline-none focus:border-pink-400 focus:ring-4 focus:ring-pink-500/30 transition duration-300 shadow-inner"
           >
         </div>
 
-        <!-- Botones -->
-        <div class="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-6">
+        <!-- Botones de Acción -->
+        <div class="flex flex-wrap items-center justify-center gap-3 w-full md:w-auto mt-2 md:mt-6">
           <button 
             type="submit" 
             id="btnStart"
-            class="flex-1 md:flex-none font-fredoka text-xl text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 active:scale-95 px-7 py-3.5 rounded-2xl shadow-lg shadow-emerald-500/30 transition transform flex items-center justify-center gap-2 border-b-4 border-emerald-800"
+            class="font-orbitron font-bold text-base sm:text-lg text-slate-950 bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-pink-500 hover:brightness-125 active:scale-95 px-8 py-3.5 rounded-2xl shadow-lg shadow-cyan-500/20 transition transform flex items-center justify-center gap-2 border border-white/40 cursor-pointer"
           >
-            <i class="fa-solid fa-play"></i> Sumar y Saltar
+            <i class="fa-solid fa-rocket"></i> INICIAR PROPULSIÓN
           </button>
 
           <button 
             type="button" 
             id="btnReset"
-            title="Reiniciar valores"
-            class="font-fredoka text-lg text-slate-600 bg-slate-100 hover:bg-slate-200 active:scale-95 px-4 py-3.5 rounded-2xl shadow border-b-4 border-slate-300 transition transform"
+            title="Reiniciar Sistema"
+            class="font-orbitron text-cyan-400 bg-slate-900 hover:bg-slate-800 active:scale-95 px-4 py-3.5 rounded-2xl border border-cyan-500/40 transition transform cursor-pointer"
           >
             <i class="fa-solid fa-rotate-right"></i>
           </button>
         </div>
       </form>
 
-      <!-- Mensaje de Validación de Error -->
-      <div id="errorMessage" class="hidden mt-3 text-center text-red-500 font-bold text-sm bg-red-50 p-2 rounded-xl border border-red-200">
-        ¡Por favor introduce números enteros positivos válidos! (Máx. 30 por número)
+      <!-- Mensaje de Error -->
+      <div id="errorMessage" class="hidden mt-4 text-center font-mono text-red-400 text-xs bg-red-950/60 p-2.5 rounded-xl border border-red-500/50">
+        [ERROR DE NAVEGACIÓN]: Ingrese números enteros positivos válidos (Máx. 30).
       </div>
     </div>
 
-    <!-- Panel Informativo de Resultado y Contador -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- HUD / Dashboard de Telemetría -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       
-      <!-- Panel de Resultado -->
-      <div class="bg-white/80 backdrop-blur-md rounded-2xl p-4 text-center border-2 border-sky-200 shadow-md flex flex-col justify-center items-center">
-        <span class="text-xs uppercase tracking-wider font-bold text-sky-600 mb-1">Resultado de la Suma</span>
-        <div id="resultText" class="font-fredoka text-2xl sm:text-3xl text-sky-900">
-          Esperando operación...
+      <!-- Telemetría: Cálculo -->
+      <div class="bg-slate-950/70 backdrop-blur-md rounded-2xl p-4 text-center border border-cyan-500/30 flex flex-col justify-center items-center">
+        <span class="text-[10px] font-orbitron uppercase tracking-widest text-cyan-400/80 mb-1">CÁLCULO DE VECTOR</span>
+        <div id="resultText" class="font-orbitron text-xl sm:text-2xl text-cyan-300 glow-text-cyan">
+          [ EN ESPERA ]
         </div>
       </div>
 
-      <!-- Panel Contador de Saltos -->
-      <div class="bg-white/80 backdrop-blur-md rounded-2xl p-4 text-center border-2 border-amber-200 shadow-md flex flex-col justify-center items-center">
-        <span class="text-xs uppercase tracking-wider font-bold text-amber-600 mb-1">Contador de Saltos</span>
-        <div id="jumpCounter" class="font-fredoka text-2xl sm:text-3xl text-amber-600">
-          Saltos: <span class="text-4xl text-amber-700">0</span>
+      <!-- Telemetría: Posición / Meteorito -->
+      <div class="bg-slate-950/70 backdrop-blur-md rounded-2xl p-4 text-center border border-fuchsia-500/30 flex flex-col justify-center items-center">
+        <span class="text-[10px] font-orbitron uppercase tracking-widest text-fuchsia-400/80 mb-1">METEORITO ACTUAL</span>
+        <div id="coordinateHud" class="font-orbitron text-xl sm:text-2xl text-fuchsia-300 glow-text-pink">
+          POSICIÓN: <span class="text-3xl text-fuchsia-400">0</span>
+        </div>
+      </div>
+
+      <!-- Control de Velocidad del Propulsor -->
+      <div class="bg-slate-950/70 backdrop-blur-md rounded-2xl p-4 text-center border border-amber-500/30 flex flex-col justify-center items-center">
+        <span class="text-[10px] font-orbitron uppercase tracking-widest text-amber-400/80 mb-1">VELOCIDAD PROPULSIÓN</span>
+        <div class="flex items-center gap-3 mt-1">
+          <i class="fa-solid fa-gauge-simple-high text-amber-400 text-xs"></i>
+          <input 
+            type="range" 
+            id="speedSlider" 
+            min="150" 
+            max="600" 
+            value="300" 
+            step="50"
+            class="w-28 accent-amber-400 cursor-pointer"
+          >
+          <span id="speedValue" class="text-xs font-mono text-amber-300">NORMAL</span>
         </div>
       </div>
 
     </div>
 
-    <!-- Estanque / Escenario Visual de la Rana -->
-    <div class="relative bg-gradient-to-b from-sky-300 via-teal-400 to-emerald-500 rounded-3xl p-6 shadow-2xl border-4 border-white/60 overflow-hidden min-h-[320px] flex flex-col justify-end">
+    <!-- Escenario del Espacio Profundo / Pista de Meteoritos -->
+    <div class="relative bg-slate-950/90 backdrop-blur-md rounded-3xl p-6 shadow-2xl border-2 border-cyan-500/40 overflow-hidden min-h-[360px] flex flex-col justify-end">
       
-      <!-- Decoración de Fondo (Sol y Nubes) -->
-      <div class="absolute top-4 left-6 text-amber-300 text-4xl animate-float">
-        <i class="fa-solid fa-sun"></i>
-      </div>
-      <div class="absolute top-6 right-10 text-white/80 text-3xl animate-float" style="animation-delay: 1.5s;">
-        <i class="fa-solid fa-cloud"></i>
-      </div>
-      <div class="absolute top-12 left-1/3 text-white/60 text-2xl animate-float" style="animation-delay: 2.5s;">
-        <i class="fa-solid fa-cloud"></i>
-      </div>
+      <!-- Nebulosa Decorativa -->
+      <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-cyan-900/20 pointer-events-none"></div>
 
-      <!-- Contenedor del Estanque con Desplazamiento -->
-      <div id="pondContainer" class="pond-scroll relative w-full overflow-x-auto pb-6 pt-24 px-8">
+      <!-- Contenedor Espacial con Scroll Suave -->
+      <div id="spaceContainer" class="space-scroll relative w-full overflow-x-auto pb-8 pt-28 px-8 z-10">
         
-        <!-- Pista de Nenúfares -->
-        <div id="track" class="relative flex items-center min-w-max gap-8 sm:gap-12 pl-4 pr-16 h-28">
+        <!-- Pista de Ruta Espacial -->
+        <div id="track" class="relative flex items-center min-w-max gap-12 sm:gap-16 pl-6 pr-24 h-32">
           
-          <!-- Sprite de la Rana Operativa -->
+          <!-- Astronauta (Sprite SVG Animado) -->
           <div 
-            id="frog" 
-            class="absolute top-0 left-0 z-20 w-16 h-16 sm:w-20 sm:h-20 transition-all duration-300 ease-out flex items-center justify-center filter drop-shadow-lg idle-frog"
+            id="astronaut" 
+            class="absolute top-0 left-0 z-30 w-16 h-16 sm:w-20 sm:h-20 transition-all duration-300 ease-out flex items-center justify-center filter drop-shadow-[0_0_12px_rgba(0,243,255,0.8)]"
             style="transform: translate(0px, 0px);"
           >
-            <!-- SVG de la Ranita Verde Simpática -->
+            <!-- SVG del Astronauta Futurista -->
             <svg viewBox="0 0 100 100" class="w-full h-full">
-              <!-- Cuerpo -->
-              <ellipse cx="50" cy="60" rx="35" ry="28" fill="#4ade80" stroke="#166534" stroke-width="3"/>
-              <ellipse cx="50" cy="65" rx="22" ry="18" fill="#bbf7d0" />
-              <!-- Ojo Izquierdo -->
-              <circle cx="30" cy="30" r="14" fill="#4ade80" stroke="#166534" stroke-width="3"/>
-              <circle cx="30" cy="30" r="9" fill="#ffffff"/>
-              <circle cx="32" cy="29" r="4" fill="#0f172a"/>
-              <!-- Ojo Derecho -->
-              <circle cx="70" cy="30" r="14" fill="#4ade80" stroke="#166534" stroke-width="3"/>
-              <circle cx="70" cy="30" r="9" fill="#ffffff"/>
-              <circle cx="68" cy="29" r="4" fill="#0f172a"/>
-              <!-- Mejillas Sonrientes -->
-              <circle cx="25" cy="55" r="5" fill="#f43f5e" opacity="0.6"/>
-              <circle cx="75" cy="55" r="5" fill="#f43f5e" opacity="0.6"/>
-              <!-- Sonrisa -->
-              <path d="M 38 60 Q 50 72 62 60" fill="transparent" stroke="#166534" stroke-width="3.5" stroke-linecap="round"/>
-              <!-- Patas Traseras -->
-              <path d="M 15 65 Q 5 80 20 85" fill="transparent" stroke="#166534" stroke-width="5" stroke-linecap="round"/>
-              <path d="M 85 65 Q 95 80 80 85" fill="transparent" stroke="#166534" stroke-width="5" stroke-linecap="round"/>
+              <!-- Mochila Propulsora Jetpack -->
+              <rect x="20" y="35" width="12" height="35" rx="4" fill="#334155" stroke="#00f3ff" stroke-width="1.5"/>
+              <rect x="68" y="35" width="12" height="35" rx="4" fill="#334155" stroke="#00f3ff" stroke-width="1.5"/>
+              
+              <!-- Llamas del Jetpack (Visibles al saltar) -->
+              <g class="thruster-flame">
+                <polygon points="22,70 26,92 30,70" fill="#ff007f"/>
+                <polygon points="24,70 26,85 28,70" fill="#ffb700"/>
+                <polygon points="70,70 74,92 78,70" fill="#ff007f"/>
+                <polygon points="72,70 74,85 76,70" fill="#ffb700"/>
+              </g>
+
+              <!-- Cuerpo del Traje Espacial -->
+              <ellipse cx="50" cy="55" rx="22" ry="24" fill="#f8fafc" stroke="#0284c7" stroke-width="2.5"/>
+              <!-- Detalles del Pecho / Panel de Control -->
+              <rect x="42" y="45" width="16" height="12" rx="2" fill="#0f172a"/>
+              <circle cx="46" cy="51" r="2" fill="#00f3ff"/>
+              <circle cx="50" cy="51" r="2" fill="#ff007f"/>
+              <circle cx="54" cy="51" r="2" fill="#ffb700"/>
+
+              <!-- Casco de Astronauta -->
+              <circle cx="50" cy="32" r="20" fill="#f8fafc" stroke="#0284c7" stroke-width="2.5"/>
+              <!-- Visera Neón Dorada/Cian -->
+              <path d="M 35 32 Q 50 18 65 32 Q 50 44 35 32 Z" fill="url(#visorGrad)" stroke="#00f3ff" stroke-width="1.5"/>
+              <ellipse cx="43" cy="28" rx="4" ry="2" fill="#ffffff" opacity="0.7"/>
+
+              <!-- Extremidades -->
+              <!-- Brazos -->
+              <path d="M 28 48 Q 18 55 22 68" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/>
+              <path d="M 72 48 Q 82 55 78 68" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round"/>
+              <!-- Piernas -->
+              <path d="M 40 76 L 36 90" fill="none" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+              <path d="M 60 76 L 64 90" fill="none" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>
+
+              <!-- Gradiente de la Visera -->
+              <defs>
+                <linearGradient id="visorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00f3ff"/>
+                  <stop offset="50%" stop-color="#9d00ff"/>
+                  <stop offset="100%" stop-color="#ff007f"/>
+                </linearGradient>
+              </defs>
             </svg>
           </div>
 
-          <!-- Los nenúfares se generarán dinámicamente aquí -->
+          <!-- Los meteoritos y la nave espacial se generan dinámicamente aquí -->
 
         </div>
       </div>
 
     </div>
 
-  </main>
+  </div>
 
   <!-- Footer -->
-  <footer class="text-center text-xs text-sky-900/70 font-semibold mt-6 pb-2">
-    Aprende Matemáticas con el Dr David; 2026 - Diseñado para Niños.
+  <footer class="text-center text-xs text-cyan-500/60 font-mono mt-6 pb-2">
+    SISTEMA DE NAVEGACIÓN Dr. Dave V2.5; 2026 - EXPLORACIÓN INTERGALÁCTICA
   </footer>
 
-  <!-- Script JavaScript con la lógica de la aplicación -->
+  <!-- Script JavaScript -->
   <script>
-    // Referencias a Elementos DOM
+    // Referencias a elementos del DOM
     const sumForm = document.getElementById('sumForm');
     const num1Input = document.getElementById('num1');
     const num2Input = document.getElementById('num2');
@@ -247,216 +344,276 @@
     const btnReset = document.getElementById('btnReset');
     const errorMessage = document.getElementById('errorMessage');
     const resultText = document.getElementById('resultText');
-    const jumpCounter = document.getElementById('jumpCounter');
+    const coordinateHud = document.getElementById('coordinateHud');
     const track = document.getElementById('track');
-    const frog = document.getElementById('frog');
-    const pondContainer = document.getElementById('pondContainer');
+    const astronaut = document.getElementById('astronaut');
+    const spaceContainer = document.getElementById('spaceContainer');
+    const starsContainer = document.getElementById('starsContainer');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedValue = document.getElementById('speedValue');
 
-    // Estado global de animación
+    // Variables de Estado
     let isAnimating = false;
-    let leafPositions = []; // Guarda las coordenadas X de cada nenúfar
+    let meteoritePositions = [];
+    let jumpDuration = 300; // ms por salto
 
-    // Web Audio API para efectos de sonido sintetizados (sin depender de URLs externas)
+    // Web Audio API para Efectos de Sonido Futuristas
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // Función para reproducir el sonido de salto ("Boing")
-    function playJumpSound() {
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+    // Generar fondo de estrellas aleatorias
+    function generateStarfield() {
+      starsContainer.innerHTML = '';
+      const count = 70;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 2.5 + 1;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+        starsContainer.appendChild(star);
       }
+    }
+
+    // Sonido sintetizado de Propulsor / Salto Espacial
+    function playThrusterSound() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
 
-      osc.type = 'sine';
-      // Frecuencia que sube para emular un brinco alegre
-      osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.15);
+      osc.type = 'sawtooth';
+      // Tono laser/propulsor ascendente
+      osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.18);
 
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.15);
+      osc.stop(audioCtx.currentTime + 0.18);
     }
 
-    // Función para reproducir un sonido de victoria al finalizar
-    function playWinSound() {
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-      const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
-      notes.forEach((freq, index) => {
+    // Sonido sintetizado de Abordaje / Triunfo Espacial
+    function playVictorySound() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const arpeggio = [300, 450, 600, 900, 1200];
+      arpeggio.forEach((freq, idx) => {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
 
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.08);
 
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.1 + 0.2);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.08 + 0.25);
 
         osc.connect(gain);
         gain.connect(audioCtx.destination);
 
-        osc.start(audioCtx.currentTime + index * 0.1);
-        osc.stop(audioCtx.currentTime + index * 0.1 + 0.2);
+        osc.start(audioCtx.currentTime + idx * 0.08);
+        osc.stop(audioCtx.currentTime + idx * 0.08 + 0.25);
       });
     }
 
-    // Generar regleta de nenúfares
-    function createLeaves(maxCount) {
-      // Eliminar nenúfares previos (manteniendo la rana)
-      const existingLeaves = track.querySelectorAll('.pad-leaf');
-      existingLeaves.forEach(leaf => leaf.remove());
+    // Generar la Pista de Meteoritos y la Nave Espacial al final
+    function createSpacePath(totalSum) {
+      // Limpiar elementos existentes
+      const oldNodes = track.querySelectorAll('.space-node');
+      oldNodes.forEach(node => node.remove());
 
-      leafPositions = [];
+      meteoritePositions = [];
+      const nodeCount = Math.max(totalSum, 8); // Mínimo 8 para estética
 
-      // Generar de 0 hasta maxCount (mínimo 10 para buen aspecto)
-      const totalPads = Math.max(maxCount + 2, 10);
+      for (let i = 0; i <= nodeCount; i++) {
+        const nodeDiv = document.createElement('div');
+        const isTargetRocket = (i === totalSum);
 
-      for (let i = 0; i <= totalPads; i++) {
-        const leafDiv = document.createElement('div');
-        leafDiv.className = 'pad-leaf relative flex flex-col items-center justify-center flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 cursor-pointer transition-transform hover:scale-105';
-        
-        // Colores alternados suaves para los nenúfares
-        const isStart = i === 0;
-        const padBg = isStart ? 'fill-emerald-600' : (i % 2 === 0 ? 'fill-emerald-500' : 'fill-green-500');
+        nodeDiv.className = 'space-node relative flex flex-col items-center justify-center flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 float-rock';
+        nodeDiv.style.animationDelay = `${(i * 0.3) % 2}s`;
 
-        leafDiv.innerHTML = `
-          <!-- Ilustración de Hoja de Nenúfar en SVG -->
-          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-            <path d="M 50 10 A 40 40 0 1 1 20 25 L 50 50 Z" class="${padBg}" stroke="#14532d" stroke-width="3"/>
-            <!-- Flor opcional para la hoja inicial -->
-            ${isStart ? '<circle cx="50" cy="50" r="8" fill="#facc15"/>' : ''}
-          </svg>
-          <!-- Etiqueta con el Número -->
-          <span class="absolute font-fredoka text-lg sm:text-xl font-bold ${isStart ? 'text-amber-200' : 'text-white'} drop-shadow">
-            ${i}
-          </span>
-        `;
+        if (isTargetRocket) {
+          // Nave Espacial en la posición final objetivo
+          nodeDiv.innerHTML = `
+            <div id="rocketShip" class="relative w-20 h-24 sm:w-24 sm:h-28 flex flex-col items-center justify-center filter drop-shadow-[0_0_20px_rgba(255,0,127,0.8)] transition-transform duration-500">
+              <!-- SVG Cohete Futurista -->
+              <svg viewBox="0 0 100 120" class="w-full h-full">
+                <!-- Aletas traseras -->
+                <polygon points="20,80 5,105 25,95" fill="#ff007f"/>
+                <polygon points="80,80 95,105 75,95" fill="#ff007f"/>
+                <!-- Cuerpo Principal -->
+                <path d="M 50 10 Q 75 40 75 85 L 25 85 Q 25 40 50 10 Z" fill="#0f172a" stroke="#00f3ff" stroke-width="3"/>
+                <!-- Ventana / Escotilla -->
+                <circle cx="50" cy="45" r="12" fill="#00f3ff" opacity="0.8"/>
+                <circle cx="50" cy="45" r="8" fill="#050714"/>
+                <circle cx="52" cy="43" r="3" fill="#ffffff"/>
+                <!-- Propulsor Base -->
+                <rect x="35" y="85" width="30" height="10" fill="#334155" rx="2"/>
+                <!-- Llama de la Nave -->
+                <polygon points="40,95 50,115 60,95" fill="#ffb700" class="animate-pulse"/>
+              </svg>
+              <span class="absolute -bottom-6 font-orbitron text-xs text-pink-400 font-bold tracking-widest bg-slate-950/80 px-2 py-0.5 rounded border border-pink-500/40">
+                DESTINO: ${i}
+              </span>
+            </div>
+          `;
+        } else {
+          // Meteorito regular
+          const isStart = (i === 0);
+          nodeDiv.innerHTML = `
+            <svg viewBox="0 0 100 100" class="w-full h-full filter drop-shadow-[0_0_8px_rgba(0,243,255,0.3)]">
+              <!-- Forma Irregular de Meteorito -->
+              <polygon points="30,10 75,15 95,45 80,85 40,95 10,70 15,30" 
+                fill="${isStart ? '#1e293b' : '#0f172a'}" 
+                stroke="${isStart ? '#00f3ff' : '#475569'}" 
+                stroke-width="3"
+              />
+              <!-- Cráteres -->
+              <circle cx="40" cy="35" r="8" fill="#1e293b" opacity="0.6"/>
+              <circle cx="65" cy="60" r="10" fill="#1e293b" opacity="0.6"/>
+              <circle cx="30" cy="65" r="5" fill="#1e293b" opacity="0.6"/>
+            </svg>
+            <span class="absolute font-orbitron text-sm sm:text-base font-extrabold ${isStart ? 'text-cyan-400 glow-text-cyan' : 'text-slate-300'}">
+              ${i}
+            </span>
+          `;
+        }
 
-        track.appendChild(leafDiv);
+        track.appendChild(nodeDiv);
       }
 
-      // Calcular posiciones de cada nenúfar una vez renderizado
+      // Guardar coordenadas relativas X de cada meteorito
       requestAnimationFrame(() => {
-        const pads = track.querySelectorAll('.pad-leaf');
-        pads.forEach((pad) => {
-          // Posición relativa respecto al contenedor 'track'
-          const rect = pad.getBoundingClientRect();
+        const nodes = track.querySelectorAll('.space-node');
+        nodes.forEach((node) => {
+          const rect = node.getBoundingClientRect();
           const trackRect = track.getBoundingClientRect();
-          const relativeX = rect.left - trackRect.left + (rect.width / 2) - 32; // Centrar rana
-          leafPositions.push(relativeX);
+          const relativeX = rect.left - trackRect.left + (rect.width / 2) - 32;
+          meteoritePositions.push(relativeX);
         });
 
-        // Colocar la rana en la hoja 0 inicialmente
-        if (leafPositions.length > 0) {
-          setFrogPosition(0, 0);
+        // Posicionar astronauta en el meteorito 0
+        if (meteoritePositions.length > 0) {
+          setAstronautPosition(0, 0);
         }
       });
     }
 
-    // Posicionar la rana en un nenúfar concreto (con offset Y para simular arco)
-    function setFrogPosition(index, offsetY = 0) {
-      if (leafPositions[index] !== undefined) {
-        const posX = leafPositions[index];
-        frog.style.transform = `translate(${posX}px, ${offsetY}px)`;
+    // Ajustar posición X e Y del astronauta
+    function setAstronautPosition(index, offsetY = 0) {
+      if (meteoritePositions[index] !== undefined) {
+        const posX = meteoritePositions[index];
+        astronaut.style.transform = `translate(${posX}px, ${offsetY}px)`;
       }
     }
 
-    // Crear onda de agua en el punto de salto/aterrizaje
-    function createRipple(index) {
-      const pad = track.querySelectorAll('.pad-leaf')[index];
-      if (!pad) return;
+    // Efecto de anillo de pulso al aterrizar en un meteorito
+    function createPulseRing(index) {
+      const node = track.querySelectorAll('.space-node')[index];
+      if (!node) return;
 
-      const ripple = document.createElement('div');
-      ripple.className = 'ripple-effect w-16 h-16 sm:w-20 sm:h-20';
-      pad.appendChild(ripple);
+      const ring = document.createElement('div');
+      ring.className = 'absolute w-16 h-16 rounded-full border-2 border-cyan-400 animate-ping pointer-events-none';
+      node.appendChild(ring);
 
-      setTimeout(() => ripple.remove(), 600);
+      setTimeout(() => ring.remove(), 600);
     }
 
-    // Función principal para animar la rana paso a paso usando async/await
-    async function animateJumps(totalSum) {
+    // Animación de los saltos espacio-temporales
+    async function animateSpaceJumps(totalSum) {
       isAnimating = true;
       btnStart.disabled = true;
       btnStart.classList.add('opacity-50', 'cursor-not-allowed');
-      frog.classList.remove('idle-frog');
 
-      // Reiniciar vista
-      jumpCounter.innerHTML = `Saltos: <span class="text-4xl text-amber-700">0</span>`;
-      
+      coordinateHud.innerHTML = `POSICIÓN: <span class="text-3xl text-fuchsia-400 font-extrabold">0</span>`;
+
       if (totalSum === 0) {
-        resultText.innerHTML = `<span class="text-emerald-600 font-bold">¡El total es 0!</span>`;
-        playWinSound();
-        resetControls();
+        resultText.innerHTML = `<span class="text-cyan-400">[ EN LA NAVE ] TOTAL: 0</span>`;
+        boardSpaceShip();
         return;
       }
 
-      // Proceso de saltos iterativo
       for (let step = 1; step <= totalSum; step++) {
-        // Actualizar mensaje de salto actual
-        jumpCounter.innerHTML = `Saltos: <span class="text-4xl text-amber-700 font-extrabold animate-bounce inline-block">${step}</span>`;
-        
-        // Sonido de salto
-        playJumpSound();
+        // Actualizar HUD
+        coordinateHud.innerHTML = `POSICIÓN: <span class="text-3xl text-pink-400 font-extrabold animate-pulse">${step}</span>`;
 
-        // Crear onda en el origen
-        createRipple(step - 1);
+        // Activar fuego del jetpack y sonido
+        astronaut.classList.add('thruster-active');
+        playThrusterSound();
+        createPulseRing(step - 1);
 
-        // Desplazar la cámara/scroll suavemente para seguir a la rana si es necesario
-        if (leafPositions[step]) {
-          const targetScroll = leafPositions[step] - pondContainer.clientWidth / 2 + 50;
-          pondContainer.scrollTo({
+        // Desplazamiento de cámara para seguir al personaje
+        if (meteoritePositions[step]) {
+          const targetScroll = meteoritePositions[step] - spaceContainer.clientWidth / 2 + 50;
+          spaceContainer.scrollTo({
             left: targetScroll,
             behavior: 'smooth'
           });
         }
 
-        // Animación de parábola/arco (subida y bajada)
-        const startX = leafPositions[step - 1];
-        const endX = leafPositions[step];
-        const duration = 350; // ms por salto
+        // Animación del salto en arco
+        const startX = meteoritePositions[step - 1];
+        const endX = meteoritePositions[step];
         const startTime = performance.now();
 
         await new Promise((resolve) => {
-          function stepFrame(now) {
+          function frame(now) {
             const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
+            const progress = Math.min(elapsed / jumpDuration, 1);
 
-            // Interpolación X lineal / Easing
             const currentX = startX + (endX - startX) * progress;
-
-            // Arco Y mediante función seno
-            const jumpHeight = -65; // Altura máxima del salto en px
+            const jumpHeight = -75; // Altura del salto en arco
             const currentY = Math.sin(progress * Math.PI) * jumpHeight;
 
-            frog.style.transform = `translate(${currentX}px, ${currentY}px)`;
+            astronaut.style.transform = `translate(${currentX}px, ${currentY}px)`;
 
             if (progress < 1) {
-              requestAnimationFrame(stepFrame);
+              requestAnimationFrame(frame);
             } else {
               // Aterrizaje
-              createRipple(step);
+              astronaut.classList.remove('thruster-active');
+              createPulseRing(step);
               resolve();
             }
           }
-          requestAnimationFrame(stepFrame);
+          requestAnimationFrame(frame);
         });
 
-        // Breve pausa para la siguiente iteración
-        await new Promise((r) => setTimeout(r, 180));
+        // Pausa entre saltos
+        await new Promise(r => setTimeout(r, 120));
       }
 
-      // Celebración de Finalización
-      playWinSound();
-      resultText.innerHTML = `¡El total es: <span class="text-emerald-600 font-extrabold text-3xl sm:text-4xl">${totalSum}</span>! 🐸🎉`;
-      
-      frog.classList.add('idle-frog');
-      resetControls();
+      // Secuencia Final: Abordaje y Despegue
+      boardSpaceShip(totalSum);
+    }
+
+    // Efecto de abordaje a la nave espacial
+    function boardSpaceShip(totalSum) {
+      playVictorySound();
+      resultText.innerHTML = `¡SUMA COMPLETADA: <span class="text-pink-400 font-extrabold text-2xl sm:text-3xl glow-text-pink">${totalSum}</span>!`;
+
+      const rocket = document.getElementById('rocketShip');
+
+      // Animación: El astronauta entra en la nave (se desvanece suavemente)
+      astronaut.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      astronaut.style.opacity = '0';
+
+      setTimeout(() => {
+        if (rocket) {
+          // La nave despega hacia el espacio profundo
+          rocket.classList.add('takeoff-animation');
+        }
+      }, 500);
+
+      setTimeout(() => {
+        resetControls();
+      }, 2500);
     }
 
     function resetControls() {
@@ -465,7 +622,7 @@
       btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
     }
 
-    // Event Listener: Manejo del formulario de Suma
+    // Event Listener: Formulario de Suma
     sumForm.addEventListener('submit', (e) => {
       e.preventDefault();
       if (isAnimating) return;
@@ -475,7 +632,6 @@
       const val1 = parseInt(num1Input.value, 10);
       const val2 = parseInt(num2Input.value, 10);
 
-      // Validación de entradas
       if (isNaN(val1) || isNaN(val2) || val1 < 0 || val2 < 0) {
         errorMessage.classList.remove('hidden');
         return;
@@ -483,41 +639,49 @@
 
       const total = val1 + val2;
 
-      // Asegurar que hay suficientes nenúfares
-      createLeaves(total);
+      // Restaurar estado del astronauta
+      astronaut.style.transition = 'all 0.3s ease-out';
+      astronaut.style.opacity = '1';
 
-      // Esperar brevemente a que el DOM posicione las hojas y ejecutar animación
+      // Reconstruir escenario
+      createSpacePath(total);
+
       setTimeout(() => {
-        resultText.innerText = `¡Calculando: ${val1} + ${val2}...!`;
-        animateJumps(total);
-      }, 100);
+        resultText.innerText = `CALCULANDO: ${val1} + ${val2}...`;
+        animateSpaceJumps(total);
+      }, 150);
     });
 
-    // Event Listener: Botón de Reiniciar
+    // Event Listener: Botón Reiniciar
     btnReset.addEventListener('click', () => {
       if (isAnimating) return;
-      
+
       num1Input.value = '';
       num2Input.value = '';
       errorMessage.classList.add('hidden');
-      resultText.innerText = 'Esperando operación...';
-      jumpCounter.innerHTML = `Saltos: <span class="text-4xl text-amber-700">0</span>`;
-      
-      // Reiniciar regleta a tamaño estándar
-      createLeaves(10);
-      pondContainer.scrollTo({ left: 0, behavior: 'smooth' });
+      resultText.innerText = '[ EN ESPERA ]';
+      coordinateHud.innerHTML = `POSICIÓN: <span class="text-3xl text-fuchsia-400">0</span>`;
+
+      astronaut.style.opacity = '1';
+      createSpacePath(8);
+      spaceContainer.scrollTo({ left: 0, behavior: 'smooth' });
     });
 
-    // Validación sobre la marcha para asegurar que no se introduzcan valores negativos
-    [num1Input, num2Input].forEach(input => {
-      input.addEventListener('input', () => {
-        if (input.value < 0) input.value = 0;
-      });
+    // Event Listener: Control de Velocidad
+    speedSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      // Invertir escala para que mayor valor = más rápido
+      jumpDuration = 750 - val;
+
+      if (val < 250) speedValue.innerText = 'LENTO';
+      else if (val < 450) speedValue.innerText = 'NORMAL';
+      else speedValue.innerText = 'HIPERVELOCIDAD';
     });
 
-    // Inicialización al cargar la ventana
+    // Inicialización al cargar la página
     window.onload = () => {
-      createLeaves(10);
+      generateStarfield();
+      createSpacePath(8);
     };
   </script>
 </body>
