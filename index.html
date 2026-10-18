@@ -652,7 +652,7 @@
     // Secuencia de Saltos (Éxito o Falla)
     async function startHopping(isCorrect) {
       // Si falla, el astronauta saltará hasta un punto intermedio antes de caer
-      const failStep = isCorrect ? correctAnswer : userAnswerInput;
+      const failStep = isCorrect ? correctAnswer : Math.max(1, Math.floor(correctAnswer / 2));
       const targetStep = isCorrect ? correctAnswer : failStep;
 
       for (let step = 1; step <= targetStep; step++) {
