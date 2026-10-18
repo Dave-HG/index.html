@@ -1,1 +1,524 @@
-# index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Ranita Sumadora</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Fredoka & Quicksand para un toque infantil y amigable -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 40%, #7dd3fc 100%);
+      min-height: 100vh;
+    }
+
+    .font-fredoka {
+      font-family: 'Fredoka', cursive;
+    }
+
+    /* Animación de flotación suave para las nubes/decoración */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+
+    .animate-float {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Animación de respiración de la rana */
+    @keyframes idle-frog {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05, 0.95); }
+    }
+
+    .idle-frog {
+      animation: idle-frog 2s ease-in-out infinite;
+    }
+
+    /* Regleta de nenúfares con scroll suave y personalizado */
+    .pond-scroll::-webkit-scrollbar {
+      height: 10px;
+    }
+    .pond-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+    }
+    .pond-scroll::-webkit-scrollbar-thumb {
+      background: #38bdf8;
+      border-radius: 10px;
+    }
+
+    /* Efectos de ondas en el agua al saltar */
+    @keyframes ripple {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    .ripple-effect {
+      position: absolute;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: ripple 0.6s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-800 p-3 sm:p-6 select-none">
+
+  <!-- Header / Título -->
+  <header class="text-center my-3">
+    <div class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-md px-6 py-2 rounded-full shadow-lg border-2 border-emerald-300">
+      <i class="fa-solid font-bold text-3xl text-emerald-500 fa-frog"></i>
+      <h1 class="font-fredoka text-2xl sm:text-4xl text-emerald-700 tracking-wide">La Ranita Sumadora</h1>
+    </div>
+    <p class="text-xs sm:text-sm text-sky-900 font-semibold mt-1">¡Introduce dos números y aprende a sumar saltando!</p>
+  </header>
+
+  <!-- Panel Principal -->
+  <main class="max-w-4xl w-full mx-auto flex-1 flex flex-col gap-6">
+
+    <!-- Tarjeta de Controles e Entradas -->
+    <div class="bg-white/90 backdrop-blur-md rounded-3xl p-5 sm:p-7 shadow-xl border-4 border-emerald-200">
+      <form id="sumForm" class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6">
+        
+        <!-- Número A -->
+        <div class="flex flex-col items-center w-full md:w-auto">
+          <label for="num1" class="font-fredoka text-lg text-emerald-800 mb-1 flex items-center gap-2">
+            <span class="bg-emerald-100 text-emerald-700 w-6 h-6 rounded-full inline-flex items-center justify-center text-xs">1</span>
+            Primer número:
+          </label>
+          <input 
+            type="number" 
+            id="num1" 
+            min="0" 
+            max="30"
+            placeholder="0"
+            required
+            class="w-28 h-14 text-center font-fredoka text-3xl text-emerald-700 bg-emerald-50 border-3 border-emerald-300 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-400/50 transition duration-200"
+          >
+        </div>
+
+        <!-- Símbolo Más -->
+        <div class="text-3xl font-fredoka text-emerald-500 font-bold hidden md:block">+</div>
+
+        <!-- Número B -->
+        <div class="flex flex-col items-center w-full md:w-auto">
+          <label for="num2" class="font-fredoka text-lg text-emerald-800 mb-1 flex items-center gap-2">
+            <span class="bg-emerald-100 text-emerald-700 w-6 h-6 rounded-full inline-flex items-center justify-center text-xs">2</span>
+            Segundo número:
+          </label>
+          <input 
+            type="number" 
+            id="num2" 
+            min="0" 
+            max="30"
+            placeholder="0"
+            required
+            class="w-28 h-14 text-center font-fredoka text-3xl text-emerald-700 bg-emerald-50 border-3 border-emerald-300 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-400/50 transition duration-200"
+          >
+        </div>
+
+        <!-- Botones -->
+        <div class="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-6">
+          <button 
+            type="submit" 
+            id="btnStart"
+            class="flex-1 md:flex-none font-fredoka text-xl text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 active:scale-95 px-7 py-3.5 rounded-2xl shadow-lg shadow-emerald-500/30 transition transform flex items-center justify-center gap-2 border-b-4 border-emerald-800"
+          >
+            <i class="fa-solid fa-play"></i> Sumar y Saltar
+          </button>
+
+          <button 
+            type="button" 
+            id="btnReset"
+            title="Reiniciar valores"
+            class="font-fredoka text-lg text-slate-600 bg-slate-100 hover:bg-slate-200 active:scale-95 px-4 py-3.5 rounded-2xl shadow border-b-4 border-slate-300 transition transform"
+          >
+            <i class="fa-solid fa-rotate-right"></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- Mensaje de Validación de Error -->
+      <div id="errorMessage" class="hidden mt-3 text-center text-red-500 font-bold text-sm bg-red-50 p-2 rounded-xl border border-red-200">
+        ¡Por favor introduce números enteros positivos válidos! (Máx. 30 por número)
+      </div>
+    </div>
+
+    <!-- Panel Informativo de Resultado y Contador -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      
+      <!-- Panel de Resultado -->
+      <div class="bg-white/80 backdrop-blur-md rounded-2xl p-4 text-center border-2 border-sky-200 shadow-md flex flex-col justify-center items-center">
+        <span class="text-xs uppercase tracking-wider font-bold text-sky-600 mb-1">Resultado de la Suma</span>
+        <div id="resultText" class="font-fredoka text-2xl sm:text-3xl text-sky-900">
+          Esperando operación...
+        </div>
+      </div>
+
+      <!-- Panel Contador de Saltos -->
+      <div class="bg-white/80 backdrop-blur-md rounded-2xl p-4 text-center border-2 border-amber-200 shadow-md flex flex-col justify-center items-center">
+        <span class="text-xs uppercase tracking-wider font-bold text-amber-600 mb-1">Contador de Saltos</span>
+        <div id="jumpCounter" class="font-fredoka text-2xl sm:text-3xl text-amber-600">
+          Saltos: <span class="text-4xl text-amber-700">0</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Estanque / Escenario Visual de la Rana -->
+    <div class="relative bg-gradient-to-b from-sky-300 via-teal-400 to-emerald-500 rounded-3xl p-6 shadow-2xl border-4 border-white/60 overflow-hidden min-h-[320px] flex flex-col justify-end">
+      
+      <!-- Decoración de Fondo (Sol y Nubes) -->
+      <div class="absolute top-4 left-6 text-amber-300 text-4xl animate-float">
+        <i class="fa-solid fa-sun"></i>
+      </div>
+      <div class="absolute top-6 right-10 text-white/80 text-3xl animate-float" style="animation-delay: 1.5s;">
+        <i class="fa-solid fa-cloud"></i>
+      </div>
+      <div class="absolute top-12 left-1/3 text-white/60 text-2xl animate-float" style="animation-delay: 2.5s;">
+        <i class="fa-solid fa-cloud"></i>
+      </div>
+
+      <!-- Contenedor del Estanque con Desplazamiento -->
+      <div id="pondContainer" class="pond-scroll relative w-full overflow-x-auto pb-6 pt-24 px-8">
+        
+        <!-- Pista de Nenúfares -->
+        <div id="track" class="relative flex items-center min-w-max gap-8 sm:gap-12 pl-4 pr-16 h-28">
+          
+          <!-- Sprite de la Rana Operativa -->
+          <div 
+            id="frog" 
+            class="absolute top-0 left-0 z-20 w-16 h-16 sm:w-20 sm:h-20 transition-all duration-300 ease-out flex items-center justify-center filter drop-shadow-lg idle-frog"
+            style="transform: translate(0px, 0px);"
+          >
+            <!-- SVG de la Ranita Verde Simpática -->
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+              <!-- Cuerpo -->
+              <ellipse cx="50" cy="60" rx="35" ry="28" fill="#4ade80" stroke="#166534" stroke-width="3"/>
+              <ellipse cx="50" cy="65" rx="22" ry="18" fill="#bbf7d0" />
+              <!-- Ojo Izquierdo -->
+              <circle cx="30" cy="30" r="14" fill="#4ade80" stroke="#166534" stroke-width="3"/>
+              <circle cx="30" cy="30" r="9" fill="#ffffff"/>
+              <circle cx="32" cy="29" r="4" fill="#0f172a"/>
+              <!-- Ojo Derecho -->
+              <circle cx="70" cy="30" r="14" fill="#4ade80" stroke="#166534" stroke-width="3"/>
+              <circle cx="70" cy="30" r="9" fill="#ffffff"/>
+              <circle cx="68" cy="29" r="4" fill="#0f172a"/>
+              <!-- Mejillas Sonrientes -->
+              <circle cx="25" cy="55" r="5" fill="#f43f5e" opacity="0.6"/>
+              <circle cx="75" cy="55" r="5" fill="#f43f5e" opacity="0.6"/>
+              <!-- Sonrisa -->
+              <path d="M 38 60 Q 50 72 62 60" fill="transparent" stroke="#166534" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Patas Traseras -->
+              <path d="M 15 65 Q 5 80 20 85" fill="transparent" stroke="#166534" stroke-width="5" stroke-linecap="round"/>
+              <path d="M 85 65 Q 95 80 80 85" fill="transparent" stroke="#166534" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <!-- Los nenúfares se generarán dinámicamente aquí -->
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-sky-900/70 font-semibold mt-6 pb-2">
+    Aprende Matemáticas Jugando &copy; 2026 - Diseñado para Niños
+  </footer>
+
+  <!-- Script JavaScript con la lógica de la aplicación -->
+  <script>
+    // Referencias a Elementos DOM
+    const sumForm = document.getElementById('sumForm');
+    const num1Input = document.getElementById('num1');
+    const num2Input = document.getElementById('num2');
+    const btnStart = document.getElementById('btnStart');
+    const btnReset = document.getElementById('btnReset');
+    const errorMessage = document.getElementById('errorMessage');
+    const resultText = document.getElementById('resultText');
+    const jumpCounter = document.getElementById('jumpCounter');
+    const track = document.getElementById('track');
+    const frog = document.getElementById('frog');
+    const pondContainer = document.getElementById('pondContainer');
+
+    // Estado global de animación
+    let isAnimating = false;
+    let leafPositions = []; // Guarda las coordenadas X de cada nenúfar
+
+    // Web Audio API para efectos de sonido sintetizados (sin depender de URLs externas)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Función para reproducir el sonido de salto ("Boing")
+    function playJumpSound() {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      // Frecuencia que sube para emular un brinco alegre
+      osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.15);
+
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.15);
+    }
+
+    // Función para reproducir un sonido de victoria al finalizar
+    function playWinSound() {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const notes = [261.63, 329.63, 392.00, 523.25]; // C4, E4, G4, C5
+      notes.forEach((freq, index) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
+
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.1 + 0.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(audioCtx.currentTime + index * 0.1);
+        osc.stop(audioCtx.currentTime + index * 0.1 + 0.2);
+      });
+    }
+
+    // Generar regleta de nenúfares
+    function createLeaves(maxCount) {
+      // Eliminar nenúfares previos (manteniendo la rana)
+      const existingLeaves = track.querySelectorAll('.pad-leaf');
+      existingLeaves.forEach(leaf => leaf.remove());
+
+      leafPositions = [];
+
+      // Generar de 0 hasta maxCount (mínimo 10 para buen aspecto)
+      const totalPads = Math.max(maxCount + 2, 10);
+
+      for (let i = 0; i <= totalPads; i++) {
+        const leafDiv = document.createElement('div');
+        leafDiv.className = 'pad-leaf relative flex flex-col items-center justify-center flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 cursor-pointer transition-transform hover:scale-105';
+        
+        // Colores alternados suaves para los nenúfares
+        const isStart = i === 0;
+        const padBg = isStart ? 'fill-emerald-600' : (i % 2 === 0 ? 'fill-emerald-500' : 'fill-green-500');
+
+        leafDiv.innerHTML = `
+          <!-- Ilustración de Hoja de Nenúfar en SVG -->
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+            <path d="M 50 10 A 40 40 0 1 1 20 25 L 50 50 Z" class="${padBg}" stroke="#14532d" stroke-width="3"/>
+            <!-- Flor opcional para la hoja inicial -->
+            ${isStart ? '<circle cx="50" cy="50" r="8" fill="#facc15"/>' : ''}
+          </svg>
+          <!-- Etiqueta con el Número -->
+          <span class="absolute font-fredoka text-lg sm:text-xl font-bold ${isStart ? 'text-amber-200' : 'text-white'} drop-shadow">
+            ${i}
+          </span>
+        `;
+
+        track.appendChild(leafDiv);
+      }
+
+      // Calcular posiciones de cada nenúfar una vez renderizado
+      requestAnimationFrame(() => {
+        const pads = track.querySelectorAll('.pad-leaf');
+        pads.forEach((pad) => {
+          // Posición relativa respecto al contenedor 'track'
+          const rect = pad.getBoundingClientRect();
+          const trackRect = track.getBoundingClientRect();
+          const relativeX = rect.left - trackRect.left + (rect.width / 2) - 32; // Centrar rana
+          leafPositions.push(relativeX);
+        });
+
+        // Colocar la rana en la hoja 0 inicialmente
+        if (leafPositions.length > 0) {
+          setFrogPosition(0, 0);
+        }
+      });
+    }
+
+    // Posicionar la rana en un nenúfar concreto (con offset Y para simular arco)
+    function setFrogPosition(index, offsetY = 0) {
+      if (leafPositions[index] !== undefined) {
+        const posX = leafPositions[index];
+        frog.style.transform = `translate(${posX}px, ${offsetY}px)`;
+      }
+    }
+
+    // Crear onda de agua en el punto de salto/aterrizaje
+    function createRipple(index) {
+      const pad = track.querySelectorAll('.pad-leaf')[index];
+      if (!pad) return;
+
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple-effect w-16 h-16 sm:w-20 sm:h-20';
+      pad.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    // Función principal para animar la rana paso a paso usando async/await
+    async function animateJumps(totalSum) {
+      isAnimating = true;
+      btnStart.disabled = true;
+      btnStart.classList.add('opacity-50', 'cursor-not-allowed');
+      frog.classList.remove('idle-frog');
+
+      // Reiniciar vista
+      jumpCounter.innerHTML = `Saltos: <span class="text-4xl text-amber-700">0</span>`;
+      
+      if (totalSum === 0) {
+        resultText.innerHTML = `<span class="text-emerald-600 font-bold">¡El total es 0!</span>`;
+        playWinSound();
+        resetControls();
+        return;
+      }
+
+      // Proceso de saltos iterativo
+      for (let step = 1; step <= totalSum; step++) {
+        // Actualizar mensaje de salto actual
+        jumpCounter.innerHTML = `Saltos: <span class="text-4xl text-amber-700 font-extrabold animate-bounce inline-block">${step}</span>`;
+        
+        // Sonido de salto
+        playJumpSound();
+
+        // Crear onda en el origen
+        createRipple(step - 1);
+
+        // Desplazar la cámara/scroll suavemente para seguir a la rana si es necesario
+        if (leafPositions[step]) {
+          const targetScroll = leafPositions[step] - pondContainer.clientWidth / 2 + 50;
+          pondContainer.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+          });
+        }
+
+        // Animación de parábola/arco (subida y bajada)
+        const startX = leafPositions[step - 1];
+        const endX = leafPositions[step];
+        const duration = 350; // ms por salto
+        const startTime = performance.now();
+
+        await new Promise((resolve) => {
+          function stepFrame(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Interpolación X lineal / Easing
+            const currentX = startX + (endX - startX) * progress;
+
+            // Arco Y mediante función seno
+            const jumpHeight = -65; // Altura máxima del salto en px
+            const currentY = Math.sin(progress * Math.PI) * jumpHeight;
+
+            frog.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+            if (progress < 1) {
+              requestAnimationFrame(stepFrame);
+            } else {
+              // Aterrizaje
+              createRipple(step);
+              resolve();
+            }
+          }
+          requestAnimationFrame(stepFrame);
+        });
+
+        // Breve pausa para la siguiente iteración
+        await new Promise((r) => setTimeout(r, 180));
+      }
+
+      // Celebración de Finalización
+      playWinSound();
+      resultText.innerHTML = `¡El total es: <span class="text-emerald-600 font-extrabold text-3xl sm:text-4xl">${totalSum}</span>! 🐸🎉`;
+      
+      frog.classList.add('idle-frog');
+      resetControls();
+    }
+
+    function resetControls() {
+      isAnimating = false;
+      btnStart.disabled = false;
+      btnStart.classList.remove('opacity-50', 'cursor-not-allowed');
+    }
+
+    // Event Listener: Manejo del formulario de Suma
+    sumForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (isAnimating) return;
+
+      errorMessage.classList.add('hidden');
+
+      const val1 = parseInt(num1Input.value, 10);
+      const val2 = parseInt(num2Input.value, 10);
+
+      // Validación de entradas
+      if (isNaN(val1) || isNaN(val2) || val1 < 0 || val2 < 0) {
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      const total = val1 + val2;
+
+      // Asegurar que hay suficientes nenúfares
+      createLeaves(total);
+
+      // Esperar brevemente a que el DOM posicione las hojas y ejecutar animación
+      setTimeout(() => {
+        resultText.innerText = `¡Calculando: ${val1} + ${val2}...!`;
+        animateJumps(total);
+      }, 100);
+    });
+
+    // Event Listener: Botón de Reiniciar
+    btnReset.addEventListener('click', () => {
+      if (isAnimating) return;
+      
+      num1Input.value = '';
+      num2Input.value = '';
+      errorMessage.classList.add('hidden');
+      resultText.innerText = 'Esperando operación...';
+      jumpCounter.innerHTML = `Saltos: <span class="text-4xl text-amber-700">0</span>`;
+      
+      // Reiniciar regleta a tamaño estándar
+      createLeaves(10);
+      pondContainer.scrollTo({ left: 0, behavior: 'smooth' });
+    });
+
+    // Validación sobre la marcha para asegurar que no se introduzcan valores negativos
+    [num1Input, num2Input].forEach(input => {
+      input.addEventListener('input', () => {
+        if (input.value < 0) input.value = 0;
+      });
+    });
+
+    // Inicialización al cargar la ventana
+    window.onload = () => {
+      createLeaves(10);
+    };
+  </script>
+</body>
+</html>
